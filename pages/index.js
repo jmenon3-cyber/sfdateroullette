@@ -99,7 +99,7 @@ export default function Home(){
   return (
     <div className="container">
       <Head>
-        <title>SF Date Roullette</title>
+        <title>SF Date Roulette</title>
         <meta name="description" content="Stop overthinking. Start adventuring." />
       </Head>
 
@@ -107,7 +107,7 @@ export default function Home(){
         <div className="brand">
           <div className="logo">SF</div>
           <div>
-            <h1>SF Date Roullette</h1>
+            <h1>SF Date Roulette</h1>
             <div className="subtitle">Stop overthinking. Start adventuring.</div>
           </div>
         </div>
