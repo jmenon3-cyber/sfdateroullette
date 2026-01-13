@@ -1,4 +1,4 @@
-# SF Date Roullette
+# SF Date Roulette
 
 Stop overthinking. Start adventuring.
 
