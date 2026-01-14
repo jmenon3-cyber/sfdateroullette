@@ -185,18 +185,19 @@ export default function Home(){
               <button className={"chip "+(adaOnly?'active':'')} onClick={()=>setAdaOnly(a=>!a)}>Yes</button>
             </div>
           </div>
-        </div>
 
-        <div className="pick">
-          <div className="panel" style={{display:'flex',flexDirection:'column',gap:8}}>
-            <div style={{fontWeight:700}}>Ready to stop deciding?</div>
-            <button className={"big-btn "+(spinning? 'spinning':'')} onClick={pick} aria-label="Spin me!">
-              <span className="big-btn-label">Spin me!</span>
-            </button>
-            <button className="chip" onClick={spinAgain}>Spin again</button>
-            <div className="muted small">Tip: try loosening filters if results are scarce.</div>
+          <div style={{marginTop:12}}>
+            <div className="panel spinner-panel" style={{display:'flex',flexDirection:'column',gap:8,alignItems:'center'}}>
+              
+              <button className={"big-btn "+(spinning? 'spinning':'')} onClick={pick} aria-label="Spin me!">
+                <span className="big-btn-label">Spin me!</span>
+              </button>
+              <button className="chip" onClick={spinAgain}>Spin again</button>
+              <div className="muted small">Tip: try loosening filters if results are scarce.</div>
+            </div>
           </div>
-
+        </div>
+        <div className="pick">
           {picked && (
             <div className="panel result">
               <h2 className="title">{picked.title}</h2>
