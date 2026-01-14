@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useRef } from 'react'
 import Head from 'next/head'
 import ideas from '../data/ideas'
 import { Analytics } from "@vercel/analytics/next"
@@ -44,6 +44,7 @@ export default function Home(){
   const [picked, setPicked] = useState(null)
   const [explain,setExplain] = useState(null)
   const [resultAnimKey, setResultAnimKey] = useState(0)
+  const resultRef = useRef(null)
 
   const filters = useMemo(()=>({
     moods:selectedMoods, times:selectedTimes, budgets:selectedBudgets, links:linkFilters, ada:adaOnly
@@ -101,7 +102,11 @@ export default function Home(){
   function pick(){
     // Start spinner, pick after short delay
     setSpinning(true)
-    setTimeout(()=>{ doPick(); setSpinning(false) }, 1100)
+    setTimeout(()=>{
+      doPick();
+      setSpinning(false)
+      setTimeout(()=>{ if(resultRef.current) resultRef.current.scrollIntoView({behavior:'smooth', block:'center'}) }, 60)
+    }, 1100)
   }
 
   function spinAgain(){
@@ -111,7 +116,7 @@ export default function Home(){
       // pick different one if possible
       const {pool} = findWithRelaxation()
       if(!pool || pool.length===0){ setSpinning(false); return }
-      if(pool.length===1){ setPicked(pool[0]); setResultAnimKey(k=>k+1); setSpinning(false); return }
+      if(pool.length===1){ setPicked(pool[0]); setResultAnimKey(k=>k+1); setSpinning(false); setTimeout(()=>{ if(resultRef.current) resultRef.current.scrollIntoView({behavior:'smooth', block:'center'}) }, 60); return }
       let next = picked
       const attempts = 10
       let i=0
@@ -119,6 +124,7 @@ export default function Home(){
       setPicked(next)
       setResultAnimKey(k=>k+1)
       setSpinning(false)
+      setTimeout(()=>{ if(resultRef.current) resultRef.current.scrollIntoView({behavior:'smooth', block:'center'}) }, 60)
     }, 1100)
   }
 
@@ -201,7 +207,7 @@ export default function Home(){
         </div>
         <div className="pick">
           {picked && (
-            <div key={resultAnimKey} className="panel result">
+            <div key={resultAnimKey} ref={resultRef} className="panel result">
               <br></br>
               <h2 className="title">{picked.title}</h2>
               <div className="meta">{picked.neighborhood} · {picked.time} · {picked.budget}</div>
